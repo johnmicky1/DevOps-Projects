@@ -1,0 +1,88 @@
+Step 1: Install Ubuntu and Ansible
+1. Go to Microsoft Store and search for Ubuntu 22.04.5 LTS. Download and install it.
+2. Open Ubuntu and enter a unique username and password.
+3. Run the following commands to install Ansible:
+
+bash
+sudo apt install ansible -y
+ansible --version
+
+
+Step 2: Create a test playbook
+1. Create a file named test.yml using nano:
+
+bash
+nano test.yml
+
+2. Paste the following code into the file:
+
+---
+- name: Test Ansible on localhost
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create a test file
+      copy:
+        content: "Hello, Ansible!\n\n"
+        dest: /tmp/ansible_test.txt
+
+
+Step 3: Run the test playbook
+1. Run the playbook using the following command:
+
+bash
+ansible-playbook test.yml
+
+
+Step 4: Create a system info playbook
+1. Create a file named system_info.yml using nano:
+
+bash
+nano system_info.yml
+
+2. Paste the following code into the file:
+
+---
+- name: Gather system information
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Get the hostname
+      command: hostname
+      register: host_output
+    - name: Show hostname
+      debug:
+        msg: "The hostname is {{ host_output.stdout }}"
+    - name: Get free memory
+      command: free -h
+      register: memory_output
+    - name: Show memory info
+      debug:
+        msg: "{{ memory_output.stdout }}"
+
+
+Step 5: Run the system info playbook
+1. Run the playbook using the following command:
+
+bash
+ansible-playbook system_info.yml
+
+
+Step 6: Run the GitHub playbook
+1. Run the following command to pull the playbook from GitHub:
+
+bash
+ansible-pull -U https://github.com/SKM-Santro/ansible-demo.git playbook.yml
+
+
+The GitHub playbook code is:
+
+---
+- name: Demo playbook from GitHub
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Print a hello message
+      debug:
+        msg: "Hello from ansible-pull on {{ inventory_hostname }}!"
