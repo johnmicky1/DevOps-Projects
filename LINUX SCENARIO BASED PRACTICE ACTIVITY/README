@@ -1,0 +1,58 @@
+Log Analysis Project
+
+Overview
+This project involves creating a workspace, generating log files, and analyzing the logs to identify error lines and report the total count of errors.
+
+Instructions
+Step 1: Create a workspace
+
+bash
+mkdir -p lab/logs/day1 lab/logs/day2
+
+
+Step 2: Create log files with sample content
+
+bash
+cat > lab/logs/day1/sysA.log <<'EOF'
+2025-08-23 09:01 INFO init
+2025-08-23 09:02 ERROR db: connection refused
+2025-08-23 09:05 WARN memory high
+2025-08-23 09:06 ERROR auth: invalid token
+EOF
+
+cat > lab/logs/day1/sysB.log <<'EOF'
+2025-08-23 09:10 INFO job started
+2025-08-23 09:12 ERROR disk full
+2025-08-23 09:13 ERROR db: timeout
+2025-08-23 09:14 INFO job aborted
+EOF
+
+cat > lab/logs/day2/sysC.log <<'EOF'
+2025-08-24 10:00 INFO heartbeat
+2025-08-24 10:02 ERROR network: unreachable
+2025-08-24 10:03 WARN cpu high
+2025-08-24 10:05 ERROR auth: expired
+2025-08-24 10:06 ERROR db: locked
+EOF
+
+
+Step 3: List the log tree
+
+bash
+ls -lR lab/logs
+
+
+Step 4: Show all error lines across all logs
+
+bash
+grep -R "ERROR" lab/logs
+
+
+Step 5: Report the total count of error lines
+
+bash
+grep -R "ERROR" lab/logs | wc -l
+
+
+Expected Output
+The total count of error lines should be 7.
