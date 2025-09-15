@@ -1,0 +1,155 @@
+Step 1: Launch an EC2 instance
+1. Log in to the AWS console and navigate to the EC2 dashboard.
+2. Click on "Launch Instance" and select Ubuntu as the operating system.
+3. Choose the instance type and configure the security group to allow HTTP, HTTPS, and SSH traffic.
+4. Download and save the key pair to your desktop.
+
+Step 2: Connect to the EC2 instance
+1. Open a command prompt or terminal and navigate to the directory where you saved the key pair.
+2. Use the following command to connect to the EC2 instance:
+
+bash
+ssh -i "/c/Users/DELL/Desktop/ansi-key.pem" ubuntu@100.26.45.132
+
+Replace the path and IP address with your own.
+
+Step 3: Install dependencies
+1. Run the following commands to update and install dependencies:
+
+bash
+sudo apt update
+python3 --version
+pip3 --version || sudo apt install -y python3-pip
+sudo apt install -y python3-venv
+
+
+Step 4: Create a virtual environment and install packages
+1. Create a new directory for your project and navigate to it:
+
+bash
+mkdir -p ~/calcapp && cd ~/calcapp
+
+2. Create a virtual environment and activate it:
+
+bash
+python3 -m venv .venv
+source .venv/bin/activate
+
+3. Install the required packages:
+
+bash
+pip install numpy pandas
+
+
+Step 5: Create a calculation script
+1. Create a new file called calculation.py using nano:
+
+bash
+nano calculation.py
+
+2. Paste the following code into the file:
+
+import argparse
+import math
+from functools import reduce
+import operator
+
+def add(nums):
+    return sum(nums)
+
+def sub(nums):
+    return reduce(operator.sub, nums)
+
+def mul(nums):
+    return math.prod(nums)
+
+def div(nums):
+    try:
+        return reduce(operator.truediv, nums)
+    except ZeroDivisionError:
+        raise ValueError("Division by zero encountered.")
+
+OPS = {
+    "add": add,
+    "sub": sub,
+    "mul": mul,
+    "div": div,
+}
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Simple CLI calculator")
+    parser.add_argument("--op", choices=OPS.keys(), required=True, help="Operation")
+    parser.add_argument("numbers", nargs="+", type=float, help="Numbers to operate on")
+    args = parser.parse_args()
+    result = OPS[args.op](args.numbers)
+    print(result)
+
+3. Save the file by pressing Ctrl+O, then Enter, and exit nano by pressing Ctrl+X.
+
+Step 6: Run the calculation script
+1. Run the script using the following command:
+
+bash
+python3 calculation.py --op add 2 3 4
+
+
+Step 7: Create a chat box script
+1. Create a new file and paste the following code:
+
+print("Welcome to the Chat Box!\n")
+name = input("What is your name? ")
+country = input("Which country are you from? ")
+hobbies = input("What are your hobbies? ")
+print("\n--- Chat Box Summary ---")
+print(f"Hello {name}!")
+print(f"You are from {country}.")
+print(f"Your hobbies are: {hobbies}.")
+print("\nThanks for sharing!")
+
+
+Step 8: Install and configure Nginx
+1. Install Nginx using the following command:
+
+bash
+sudo apt update -y
+sudo apt install -y nginx
+
+2. Create a new file in /var/www/html called index.html:
+
+bash
+sudo nano /var/www/html/index.html
+
+3. Paste the following code into the file:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Technology Devices</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            color: #0056b3;
+        }
+        .device {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Popular Technology Devices</h1>
+    <div class="device">
+        <h2>Smartphone</h2>
+        <p>Portable device combining communication, internet, and apps into one handheld tool.</p>
+    </div>
+    <div class="device">
+        <h2>Laptop</h2>
+        <p>Lightweight computer that allows flexible
